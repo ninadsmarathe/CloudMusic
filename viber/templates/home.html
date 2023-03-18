@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block head_title %}Home Feed | {{ block.super }}{% endblock head_title %}
+{% block content %}
+    <br>
+    <br>
+
+<h1>
+{{ request.user }}'s Home Page
+</h1>
+    {% include "snippets/search-base.html" %}
+
+    <br>
+
+    <h1>Based on the Users you are <strong>Following</strong></h1>
+    {% for i in  user.profile.following.all  %}
+        <h3 class="border" style="padding: 5px">User : <a href="u/{{ i }}/">{{ i }}</a> </h3>
+        <br>
+        {% for album in i.albumcreate_set.all %}
+
+ <div class="row">
+<div class="col-md-3">
+<div class="card bg-dark text-white" style="height: 250px;width: 250px">
+<img class="card-img" src="{{ album.album_logo.url }}" alt="Card image">
+</div>
+</div>
+<div class="col-md-7">
+<div class="card-img-overlay">
+    <h5 class="card-title" ><a href="albums/{{ album.slug }}/">{{ album.album_title }}</a> <small>(by {{ album.artist }})</small></h5>
+
+<p><a href='{{ request.path}}?q={{ album.artist }}'>{{ album.artist }}</a> |
+<a href='{{ request.path}}?q= {{ album.genre }}'> {{ album.genre }}</a>
+</p>
+<p>
+{% for item in album.songcreate_set.all %}
+<b style='margin-bottom: 15px;'><a href='albums/{{ album.slug }}/song/{{ item.id }}/play/'>{{ item.song_title }}</a></b>&nbsp;&nbsp;
+{% endfor %}
+</p>
+<p class="card-text" >{{ album.timestamp }}, Updated {{ album.updated|timesince }} ago</p>
+</div>
+</div>
+</div>
+            <br>
+            <hr>
+
+        {% endfor %}
+{% if not i.albumcreate_set.all %}
+    <h3>No Items to Show </h3>
+        {% endif %}
+
+    {% endfor %}
+
+    <br>
+    {% if not is_existing %}
+        <h3>Follow user to update the Home Feed</h3>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,21 @@
+{#<form class='form' method='GET' action='.'>#}
+{#<input type='text' placeholder="Search.." name='q' value='{{ request.GET.q }}'>#}
+{#<button class='btn btn-default' type='submit'>Search</button>#}
+{#</form>#}
+
+
+<form class="form-inline" method='GET' action='' >
+    <input class="form-control mr-sm-2" style="width: 450px" type="search" name='q' value='{{ request.GET.q }}' placeholder="Search by Artist, Albums, Songs, User and Genre" aria-label="Search" >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+
+
+{##}
+{#<form method='GET' action='' class="form my-2 my-lg-0 search-form" style="width: 400px">#}
+{#  <div class='input-group'>#}
+{#      <input class="form-control" type='text'  placeholder="Search by Album,Songs,Artist" name='q' value='{{ request.GET.q }} '>#}
+{#    <span class='input-group-btn'>#}
+{#        <button class="btn btn-outline-success" type="submit">Search</button>#}
+{#    </span>#}
+{#    </div>#}
+{#</form>#}

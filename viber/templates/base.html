@@ -1,0 +1,33 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% include "snippets/css.html" %}
+
+    <title>{% block head_title %}
+        CloudMusic
+    {% endblock head_title %}</title>
+  <link rel="shortcut icon" type="image/png" href="{%  static 'img/image_2oh_icon.ico' %}"/>
+
+  </head>
+  <body>
+      <div class="container">
+      </div>
+          {% include "snippets/nav-bar.html" %}
+          <br>
+          <br>
+{#            {% include "snippets/search-base.html" %}#}
+          <div class="container">
+                {% block content %}
+                {% endblock content %}
+          </div>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+          {% include "snippets/js.html" %}
+  </body>
+</html>

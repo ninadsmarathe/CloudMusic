@@ -1,0 +1,85 @@
+{#{% extends "base.html" %}#}
+{#{% block head_title %}Users/{{ block.super }}{% endblock head_title %}#}
+{#{% block content %}#}
+{##}
+{#<h1>User's Tab</h1>#}
+{##}
+{##}
+{#    <h1>All Users</h1>#}
+{#    {% for i in user_model %}#}
+{#        <div class="row">#}
+{#        <div class="col-3"><a href="/u/{{ i }}/">{{ i.username }}</a> </div>#}
+{#        <div class="col-3"> <p>{% include 'snippets/follow_form.html' with username=user.username is_following=is_following %}</p></div>#}
+{#        </div>#}
+{##}
+{#    {% endfor %}#}
+{#    <h1>Followers</h1>#}
+{##}
+{#    {% for i in user.profile.followers.all %}#}
+{#        <div class="row">#}
+{#        <div class="col-3"><a href="/u/{{ i }}/">{{ i.username }}</a> </div>#}
+{#        <div class="col-3"> <p>{% include 'snippets/follow_form.html' with username=user.username is_following=is_following %}</p></div>#}
+{#        </div>#}
+{##}
+{#    {% endfor %}#}
+{#    <h1>Followings</h1>#}
+{#    {% for i in user.profile.following.all %}#}
+{#        <div class="row">#}
+{#        <div class="col-3"><a href="/u/{{ i }}/">{{ i.username }}</a> </div>#}
+{#        <div class="col-3"> <p>{% include 'snippets/follow_form.html' with username=user.username is_following=is_following %}</p></div>#}
+{#        </div>#}
+{##}
+{#    {% endfor %}#}
+{#{% endblock content %}#}
+
+
+
+{% extends "base.html" %}
+{% block head_title %}Users | {{ block.super }}{% endblock head_title %}
+{% block content %}
+<br>
+    <br>
+<h1>User's Tab</h1>
+<hr>
+
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">All Users <span class="badge badge-pill badge-primary" style="background: #F05F40">{{ count_all }}</span></th>
+      <th scope="col">Followings <span class="badge badge-pill badge-primary" style="background: #F05F40">{{ count_following }}</span></th>
+      <th scope="col">Followers <span class="badge badge-pill badge-primary" style="background: #F05F40">{{ count_follower }}</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+          {% for i in user_model %}
+              {% if i != request.user %}
+            <a href="/u/{{ i }}/">{{ i.username }}</a><br>
+              {% endif %}
+          {% endfor %}
+      </td>
+      <td>
+          {% for i in user.profile.following.all %}
+            <a href="/u/{{ i }}/">{{ i.username }}</a><br>
+          {% endfor %}
+      {% if not user.profile.following.all %}
+          No Followings
+      {% endif %}
+      </td>
+      <td>
+          {% for i in user.profile.followers.all %}
+            <a href="/u/{{ i }}/">{{ i.username }}</a><br>
+          {% endfor %}
+      {% if not user.profile.followers.all %}
+          No Followers
+      {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+{% endblock content %}
+
+

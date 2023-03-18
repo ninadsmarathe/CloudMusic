@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ object.album_title }}|Album|{{ block.super}}{% endblock head_title %}
+
+{% block content %}
+    <br><br>
+<div class="row">
+<div class="col-md-3">
+<div class="card bg-dark text-white" style="height: 250px;width: 250px">
+    <img class="card-img" src="{{ object.album_logo.url }}" alt="Card image">
+    </div>
+    </div>
+    <div class="col-md-7">
+    <div class="card-img-overlay">
+        <h5 class="card-title" style="color: #F05F40">{{ object.album_title }} <small>(by {{ object.artist }})</small></h5>
+        <p class="card-text" style="color: #F05F40">{{ object.genre }}</p>
+        <p class="card-text" style="color: #F05F40">Created by {{ object.user.username }}</p>
+        <p class="card-text" style="color: #F05F40">{{ object.timestamp }}, Updated {{ object.updated|timesince }} ago</p>
+    </div>
+</div>
+</div>
+{#    <h1>{{ object.album_title }}  <small>({{ object.artist }})</small></h1>#}
+{#    <p>{{ object.genre }}</p>#}
+{#    <p>{{ object.timestamp }}, Updated {{ object.updated|timesince }} ago</p>#}
+
+
+<hr>
+
+ <h3>Songs List&nbsp; &nbsp; &nbsp;<small><a href="/albums/{{ object.slug }}/song-add"><small>Add New Song</small></a></small></h3>
+
+  {% include "snippets/search-base.html" %}
+    <br>
+<br>
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Song</th>
+      <th scope="col">Album</th>
+        <th scope="col">Play</th>
+      <th scope="col">Favourite</th>
+        {% if object.user == request.user %}
+      <th scope="col">Delete</th>
+        {% endif %}
+    </tr>
+  </thead>
+  {% for obj in object_list %}
+  <tbody>
+    <tr >
+{#      <th scope="row"></th>#}
+      <td>{{ obj.song_title }}</td>
+      <td>{{ object.album_title }}</td>
+        <td><a href="/albums/{{ object.slug }}/song/{{ obj.id }}/play/"> <i class="fas fa-play"></i></a></td>
+      <td>{% if  obj.is_favorite  %}
+      <a href="." ><i class="fas fa-star"></i></a>
+      {% else %}
+      <a href="." ><i class="far fa-star" ></i></a>
+      {% endif %}
+      </td>
+
+        {% if object.user == request.user %}
+        <td><a href="/albums/{{ object.slug }}/song/{{ obj.id }}/delete/"><i class="fas fa-trash"></i></a></td>
+    {% endif %}
+    </tr>
+  </tbody>
+    {% endfor %}
+</table>
+    {% if not object_list %}
+        <a href="/albums/{{ object.slug }}/song-add"> Add New Songs</a>
+    {% endif %}
+
+
+
+
+
+<hr>
+{% endblock %}
+

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block head_title %}Songs List | {{ block.super }}{% endblock head_title %}
+{% block content %}
+    <br><br>
+<h3>Songs List</h3>
+
+    {% include "snippets/search-base.html" %}
+<hr>
+    <br>
+
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Song</th>
+      <th scope="col">Album</th>
+        <th scope="col">Uploaded by</th>
+        <th scope="col">Play</th>
+      <th scope="col">Favourite</th>
+
+    </tr>
+  </thead>
+  {% for obj in object_list %}
+  <tbody>
+    <tr>
+{#      <th scope="row"></th>#}
+      <td>{{ obj.song_title }}</td>
+      <td>{{ obj.album.album_title }}</td>
+        <td>{{ obj.album.user }}</td>
+        <td><a href="/albums/{{ obj.album.slug}}/song/{{ obj.id }}/play/"><i class="fas fa-play"></i></a> </td>
+      <td>{% if  obj.is_favorite  %}
+      <a href="." ><i class="fas fa-star"></i></a>
+      {% else %}
+      <a href="." ><i class="far fa-star" ></i></a>
+      {% endif %}
+      </td>
+
+    </tr>
+  </tbody>
+    {% endfor %}
+</table>
+
+
+<hr>
+{% endblock content %}

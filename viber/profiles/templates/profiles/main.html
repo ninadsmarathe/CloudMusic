@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ user.username }} | {{ block.super}}{% endblock head_title %}
+
+{% block content %}
+    <br>
+    <br>
+<h1>{{ user.username }}'s Profile &nbsp; &nbsp; &nbsp;<small><a href="/albums/add/"><small>Add New Album</small></a></small></h1>
+{% include "snippets/search-base.html" %}
+    <br>
+<hr/>
+{% if locations %}
+{% for album in locations %}
+
+
+    <div class="row">
+<div class="col-md-3">
+<div class="card bg-dark text-white" style="height: 250px;width: 250px">
+<img class="card-img" src="{{ album.album_logo.url }}" alt="Card image">
+</div>
+</div>
+<div class="col-md-7">
+<div class="card-img-overlay">
+    <h5 class="card-title" ><a href="/albums/{{ album.slug }}/">{{ album.album_title }}</a> <small>(by {{ album.artist }})</small></h5>
+
+<p><a href='{{ request.path}}?q={{ album.artist }}'>{{ album.artist }}</a> |
+<a href='{{ request.path}}?q= {{ album.genre }}'> {{ album.genre }}</a>
+</p>
+<p>
+{% for item in album.songcreate_set.all %}
+<b style='margin-bottom: 15px;'><a href='/albums/{{ album.slug }}/song/{{ item.id }}/play/'>{{ item.song_title }}</a></b>&nbsp;&nbsp;
+{% endfor %}
+</p>
+<p class="card-text" >{{ album.timestamp }}, Updated {{ album.updated|timesince }} ago</p>
+<br>
+<p><a href="/albums/{{ album.slug }}/edit"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;  <a href="/albums/{{ album.slug }}/delete"><i class="fas fa-trash"></i></a></p>
+</div>
+</div>
+</div>
+<br>
+    <hr>
+
+
+
+
+{% endfor %}
+
+{% else %}
+<p class='lead'>No Items Found</p>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block head_title %}{{ user.username }} | {{ block.super}}{% endblock head_title %}#}
+{##}
+{#{% block content %}#}
+{#<h1>{{ user.username }}</h1>#}
+{#<hr/>#}
+{#{% if user.item_set.all.exists %}#}
+{#{% for rest in user.restaurantlocation_set.all %}#}
+{#    <li><b>{{ rest.name }}</b> {{ rest.location }} | {{ rest.category }}#}
+{#        <p>#}
+{#            <b>Items</b>#}
+{#        <ul>#}
+{#            {% for item in rest.item_set.all %}#}
+{#                <li style='margin-bottom: 15px;'>{{ item.name }}<br/>#}
+{#                        {% for ing in item.get_content %}#}
+{#                        <span style='padding: 2px 4px; margin-right:4px; background-color:#ccc'>{{ ing }}</span>#}
+{#                        {% endfor %}#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#        </p>#}
+{#    </li>#}
+{##}
+{#{% endfor %}#}
+{##}
+{#{% else %}#}
+{#<p class='lead'>No Items Found</p>#}
+{#{% endif %}#}
+{##}
+{#{% endblock %}#}

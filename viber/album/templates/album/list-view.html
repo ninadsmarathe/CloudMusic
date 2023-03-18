@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block head_title %}All Albums | {{ block.super }}{% endblock head_title %}
+{% load staticfiles %}
+{% block content %}
+    <br><br>
+    <h1>{{ request.user }}'s Album&nbsp; &nbsp; &nbsp;<small><a href="/albums/add/"><small>Add New Album</small></a></small></h1>
+{% include "snippets/search-base.html" %}
+    <hr>
+<br>
+
+<div class='row'>
+
+    {% for obj in object_list %}
+        <div class='col'>
+{#            {{ forloop.counter }}#}
+
+                    <div class="card-deck" style="width: 20rem">
+                        <div class="card">
+                            {% if obj.album_logo.url %}
+                            <a href="{{ obj.slug }}/"> <img class="card-img-top" src="{{ obj.album_logo.url }}" alt=""></a>
+                            {% endif %}
+                            <div class="card-body">
+                                <a href="{{ obj.slug }}/"><h5 class="card-title">{{ obj.album_title }}</h5></a>
+                                <p class="card-text">by {{ obj.artist }} <small style="color: #5a6268">(uploaded by {{ obj.user.username }})</small></p>
+
+                            </div>
+
+                            <div class="card-footer">
+                                <small class="text-muted">{{ obj.timestamp }}  </small> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                {% if forloop.counter|divisibleby:3 %}
+                 </div> </div><div class='row'><div class='col-12'><hr/></div>
+
+                {% else %}
+                 </div>
+                {% endif %}
+
+
+    {% endfor %}
+</div>
+
+    {% if not object_list %}
+        <a href="/albums/add/"> Add New Album</a>
+    {% endif %}
+
+<hr>
+
+{% endblock content %}
+
+
+
+{#<a href="/albums/{{ obj.slug }}/edit"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;  <a href="/albums/{{ obj.slug }}/delete"><i class="fas fa-trash"></i></a>#}
+
+
+
+
+
+
+
+
+
+
+{# <ul>#}
+{#        {% for obj in object_list %}#}
+{##}
+{##}
+{##}
+{##}
+{#            <li>#}
+{#                <img src="{{ obj.album_logo.url }} " />#}
+{#                <a href="{{ obj.slug }}/">#}
+{#                    <strong>{{ obj.album_title }}</strong></a>(<small>{{ obj.timestamp }}</small>)#}
+{#                <br>#}
+{#                <small>by {{ obj.artist }}</small>&nbsp;#}
+{#                <a href="/albums/{{ obj.slug }}/edit">Edit</a>&nbsp;#}
+{#                <a href="/albums/{{ obj.slug }}/delete">Delete</a>&nbsp;#}
+{#                <hr>#}
+{#            </li>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#        {% endfor %}#}
+{#    </ul>#}

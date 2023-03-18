@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br>
+<br>
+    <h1>Registration Form</h1>
+<hr>
+<form method="POST" action=".">{% csrf_token %}
+    <div class="form-group">
+    {{ form.as_p }}
+        <br>
+    <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form>
+{%  if data %}
+    <p>{{ data }}</p>
+{% endif %}
+
+{% endblock content %}
